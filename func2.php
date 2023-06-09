@@ -10,7 +10,9 @@ if(isset($_POST['patsub1'])){
 	$password=$_POST['password'];
   $cpassword=$_POST['cpassword'];
   if($password==$cpassword){
-  	$query="insert into patreg(fname,lname,gender,email,contact,password,cpassword) values ('$fname','$lname','$gender','$email','$contact','$password','$cpassword');";
+    // Encrypt the password using bcrypt
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+  	$query="insert into patreg(fname,lname,gender,email,contact,password) values ('$fname','$lname','$gender','$email','$contact','$hashedPassword');";
     $result=mysqli_query($con,$query);
     if($result){
         $_SESSION['username'] = $_POST['fname']." ".$_POST['lname'];
